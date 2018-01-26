@@ -6,60 +6,79 @@ const secret = [1, 2, 3, 4];
 
 let guess = '';
 let guessCount = 0;
-let results = [];
+let resultArray = [];
+let secretArray = [];
 
-const postNotification = (message = '') => {
+const postToNotification = (message = '') => {
   notificationCanvas.innerText = message;
 }
 
-const postResult = result => {
+const postToResult = result => {
   resultsCanvas.innerHTML = `${result}<br />${ resultsCanvas.innerHTML}`;
 }
 
-const checkResult = guess => {
-  const secretArray = [...secret];
-  let guessArray = guess.split('').map(number => parseInt(number, 10));
+const clearResult = () => {
+  resultsCanvas.innerHTML = '';
+}
 
-  if (guessArray.length !== 4) { return false; }
-
-  // Clear input:
+const clearInput = () => {
   guessInput.value = '';
-  guessCount += 1;
+}
 
-  const resultGuess = `You guessed ${guess}`;
-
-  const resultArray = [];
-
-  guessArray
-    .map((number, i) => {
-
-        // Match location and value:
-        if (number === secretArray[i]) {
-          secretArray[i] = '-';
-          resultArray.push('x');
-          return 0;
-        }
-
-        return number;
-      })
-      .map((number, i) => {
-
-        // Match location and value:
-        if (secretArray.findIndex(secret => secret === number) >= 0) {
-          const index = secretArray.findIndex(secret => secret === number);
-          secretArray[index] = '-';
-          resultArray.push('o');
-          return 0;
-        }
-
-        return number;
-      });
-
-  if (resultArray.join('') === 'xxxx') {
-    postNotification(`You won in ${guessCount} guesses!`);
+// Match location and value:
+const checkCorrectLocation = (number, i) => {
+  if (number === secretArray[i]) {
+    secretArray[i] = '-';
+    resultArray.push('x');
+    return 0;
   }
 
-  return postResult(`${resultGuess} -- Results: ${resultArray}`);
+  return number;
+}
+
+// Match location and value:
+const checkCorrectValue = (number, i) => {
+  if (secretArray.findIndex(secret => secret === number) >= 0) {
+    const index = secretArray.findIndex(secret => secret === number);
+    secretArray[index] = '-';
+    resultArray.push('o');
+    return 0;
+  }
+
+  return number;
+}
+
+const youWin = () => {
+  guessInput.disabled = true;
+  return postToNotification(`You won in ${guessCount} guesses!`);
+}
+
+const guessAgain = () => {
+  postToNotification(`${guessCount} guesses so far.`);
+}
+
+const checkResult = guess => {
+  let guessArray = guess.split('').slice(0, 4).map(number => parseInt(number, 10));
+
+  if (guessArray.length < 4) { return false; }
+
+  // Clear input:
+  clearInput();
+  guessCount += 1;
+
+  const resultGuess = `${guessArray.join('')}`;
+  resultArray = [];
+  secretArray = [...secret];
+
+  guessArray
+    .map(checkCorrectLocation)
+    .map(checkCorrectValue);
+
+  postToResult(`${resultGuess} [${resultArray}]`);
+
+  if (resultArray.join('') === 'xxxx') { return youWin(); }
+
+  return guessAgain();
 }
 
 const checkCharValidity = char => {
@@ -69,7 +88,7 @@ const checkCharValidity = char => {
   if (integer && integer > 0 && integer < 7) { return char; }
 
   // Notify the player and return nothing:
-  postNotification('That was not a valid guess')
+  postToNotification('That was not a valid character.')
   return '';
 }
 
@@ -80,9 +99,6 @@ const checkGuessValidity = value => {
 
 // Check the input and compare if complete:
 const validateGuess = event =>  {
-  // Clear notifications:
-  postNotification();
-
   const { value } = event.currentTarget;
   const validGuess = checkGuessValidity(value);
 
@@ -92,18 +108,21 @@ const validateGuess = event =>  {
   return checkResult(validGuess);
 }
 
-// Reset game and add listenters:
-const restart = event => {
-  event.preventDefault();
-  guessInput.value = '';
+// Reset game:
+const reset = event => {
+  postToNotification('');
+  clearInput();
+  clearResult();
+  guessCount = 0;
+  guessInput.disabled = false;
+  return guessInput.focus();
 }
 
 // Start the game:
 const init = () => {
-
   guessInput.focus();
   guessInput.addEventListener('keyup', validateGuess);
-  restartButton.addEventListener('click', restart);
+  restartButton.addEventListener('click', reset);
 }
 
 init();

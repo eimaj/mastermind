@@ -1,6 +1,25 @@
 .canvas {
-  width: 100%;
+  margin: 0 auto;
+  width: 320px;
   font-family: monospace;
+  text-align: center;
+}
+
+.canvas__explantion {
+}
+
+.canvas__title {
+  font-weight: 400;
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+
+.canvas__rules {
+  padding: 16px;
+  background-color: whitesmoke;
+  line-height: 24px;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 
 .canvas__input {
@@ -21,6 +40,10 @@
   outline: none;
 }
 
+.canvas__input:disabled {
+  border-color: whitesmoke;
+}
+
 .canvas__results {}
 
 .restart-button {
@@ -37,12 +60,14 @@
 }
 
 .canvas__notification {
-  color: red;
+  padding: 10px 0;
   text-align: center;
   font-size: 20px;
+  color: red;
 }
 
 .canvas__results {
   text-align: center;
   font-size: 20px;
+  letter-spacing: 1px;
 }
