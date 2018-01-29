@@ -9,18 +9,22 @@ let guessCount = 0;
 let resultArray = [];
 let secretArray = [];
 
+// User notification:
 const postToNotification = (message = '') => {
   notificationCanvas.innerText = message;
 }
 
+// Append result for user:
 const postToResult = result => {
   resultsCanvas.innerHTML = `${result}<br />${ resultsCanvas.innerHTML}`;
 }
 
+// Clear the result block:
 const clearResult = () => {
   resultsCanvas.innerHTML = '';
 }
 
+// Clear the input:
 const clearInput = () => {
   guessInput.value = '';
 }
@@ -48,15 +52,18 @@ const checkCorrectValue = (number, i) => {
   return number;
 }
 
+// Winning message for user:
 const youWin = () => {
   guessInput.disabled = true;
   return postToNotification(`You won in ${guessCount} guesses!`);
 }
 
+// Let the user know how many guesses they've had:
 const guessAgain = () => {
   postToNotification(`${guessCount} guesses so far.`);
 }
 
+// Do all the things with the result:
 const checkResult = guess => {
   let guessArray = guess.split('').slice(0, 4).map(number => parseInt(number, 10));
 
@@ -81,6 +88,7 @@ const checkResult = guess => {
   return guessAgain();
 }
 
+// Make sure they key pressed is 1 to 6 and let the user know:
 const checkCharValidity = char => {
   const integer = parseInt(char, 10);
 
@@ -92,6 +100,7 @@ const checkCharValidity = char => {
   return '';
 }
 
+// Filter out all invalid chars:
 const checkGuessValidity = value => {
   // Send back the valid characters in the response:
   return value.split('').map(checkCharValidity).join('');
