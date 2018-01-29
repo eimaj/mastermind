@@ -127,7 +127,6 @@ const createSecret = () => {
   return [a, b, c, d];
 }
 
-
 // Reset game:
 const reset = event => {
   postToNotification('');
