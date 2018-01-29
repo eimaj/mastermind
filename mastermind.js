@@ -2,8 +2,8 @@ const restartButton = document.getElementById('restart');
 const notificationCanvas = document.getElementById('notification');
 const resultsCanvas = document.getElementById('results');
 const guessInput = document.getElementById('guess');
-const secret = [1, 2, 3, 4];
 
+let secret = [];
 let guess = '';
 let guessCount = 0;
 let resultArray = [];
@@ -117,21 +117,33 @@ const validateGuess = event =>  {
   return checkResult(validGuess);
 }
 
+// Create new secret:
+const createSecret = () => {
+  const a = Math.floor(Math.random() * 6) + 1;
+  const b = Math.floor(Math.random() * 6) + 1;
+  const c = Math.floor(Math.random() * 6) + 1;
+  const d = Math.floor(Math.random() * 6) + 1;
+
+  return [a, b, c, d];
+}
+
+
 // Reset game:
 const reset = event => {
   postToNotification('');
   clearInput();
   clearResult();
   guessCount = 0;
+  secret = createSecret();
   guessInput.disabled = false;
   return guessInput.focus();
 }
 
 // Start the game:
 const init = () => {
-  guessInput.focus();
   guessInput.addEventListener('keyup', validateGuess);
   restartButton.addEventListener('click', reset);
+  return reset();
 }
 
 init();
