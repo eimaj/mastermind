@@ -17,9 +17,14 @@
 .canvas__rules {
   padding: 16px;
   background-color: whitesmoke;
-  line-height: 24px;
+  line-height: 28px;
   font-size: 20px;
   letter-spacing: 1px;
+}
+
+.canvas__rules--small {
+  line-height: 20px;
+  font-size: 12px;
 }
 
 .canvas__input {
@@ -44,7 +49,10 @@
   border-color: whitesmoke;
 }
 
-.canvas__results {}
+.canvas__results {
+  margin-bottom: 30px;
+  line-height: 28px;
+}
 
 .restart-button {
   position: absolute;
