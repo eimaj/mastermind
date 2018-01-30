@@ -1,17 +1,25 @@
 const restartButton = document.getElementById('restart');
+const highscoreCanvas = document.getElementById('highscore');
 const notificationCanvas = document.getElementById('notification');
 const resultsCanvas = document.getElementById('results');
 const guessInput = document.getElementById('guess');
 
-let secret = [];
 let guess = '';
 let guessCount = 0;
+let highscore = 100;
 let resultArray = [];
+let secret = [];
 let secretArray = [];
 
 // User notification:
 const postToNotification = (message = '') => {
   notificationCanvas.innerText = message;
+}
+
+// User notification:
+const postHighscore = () => {
+  document.cookie = `eimaj_mastermind_highscore=${highscore}`;
+  highscoreCanvas.innerText = `High Score: ${highscore}`;
 }
 
 // Append result for user:
@@ -52,9 +60,31 @@ const checkCorrectValue = (number, i) => {
   return number;
 }
 
-// Winning message for user:
+// Calculate and save the high score:
+const calcualateHighScore = (guessCount = 0) => {
+  if (highscore > 99 && !guessCount) {
+    // Check for the cookie:
+    const cookieRegex = /(?:(?:^|.*;\s*)eimaj_mastermind_highscore\s*\=\s*([^;]*).*$)|^.*$/;
+    const cookie = document.cookie.replace(cookieRegex, "$1");
+
+    if (cookie && highscore < 100) {
+      highscore = cookie;
+      return postHighscore();
+    }
+  }
+
+  if (guessCount < highscore && guessCount > 0) {
+    highscore = guessCount;
+    return postHighscore();
+  }
+
+  return false;
+}
+
+// Winning message for user & high score:
 const youWin = () => {
   guessInput.disabled = true;
+  calcualateHighScore(guessCount);
   return postToNotification(`You won in ${guessCount} guesses!`);
 }
 
@@ -133,7 +163,8 @@ const reset = event => {
   clearInput();
   clearResult();
   guessCount = 0;
-  secret = createSecret();
+  // secret = createSecret();
+  secret = [1,1,1,1];
   guessInput.disabled = false;
   return guessInput.focus();
 }
@@ -142,6 +173,7 @@ const reset = event => {
 const init = () => {
   guessInput.addEventListener('keyup', validateGuess);
   restartButton.addEventListener('click', reset);
+  calcualateHighScore();
   return reset();
 }
 

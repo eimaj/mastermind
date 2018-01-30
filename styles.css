@@ -68,6 +68,10 @@ body, * {
   color: white;
 }
 
+.canvas__highscore {
+  margin-bottom: 20px;
+}
+
 .canvas__notification {
   padding: 10px 0;
   text-align: center;
