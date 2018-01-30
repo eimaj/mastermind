@@ -163,8 +163,7 @@ const reset = event => {
   clearInput();
   clearResult();
   guessCount = 0;
-  // secret = createSecret();
-  secret = [1,1,1,1];
+  secret = createSecret();
   guessInput.disabled = false;
   return guessInput.focus();
 }
