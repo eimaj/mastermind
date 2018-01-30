@@ -65,7 +65,7 @@ const calcualateHighScore = (guessCount = 0) => {
   if (highscore > 99 && !guessCount) {
     // Check for the cookie:
     const cookieRegex = /(?:(?:^|.*;\s*)eimaj_mastermind_highscore\s*\=\s*([^;]*).*$)|^.*$/;
-    const cookie = document.cookie.replace(cookieRegex, "$1");
+    const cookie = parseInt(document.cookie.replace(cookieRegex, "$1"), 10);
 
     if (cookie && highscore < 100) {
       highscore = cookie;
