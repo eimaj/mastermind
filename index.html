@@ -3,9 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
     <title>Mastermind.js</title>
+    
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="./styles.css">
   </head>
+
   <body>
     <div class="canvas">
       <div class="canvas__explantion">
@@ -20,7 +26,7 @@
       <input id="guess" class="canvas__input" type="number" />
 
       <div id="highscore" class="canvas__highscore"></div>
-      
+
       <div id="notification" class="canvas__notification"></div>
 
       <div id="results" class="canvas__results"></div>

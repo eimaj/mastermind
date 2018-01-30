@@ -1,0 +1,8 @@
+{
+  "short_name": "Mastermind.js",
+  "name": "Mastermind.js",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "rgb(245, 245, 245)",
+  "background_color": "rgb(255, 255, 255)"
+}
