@@ -6,7 +6,7 @@ Inspired by [@agentultra](https://github.com/agentultra) and his laundromat demo
 
 Uses HTML/CSS/JS and no dependancies. The initial app was built at about 30,000 feet with no internet access. I got a little caught up in design details, but I really enjoyed figuring things out without any dependencies or libraries.
 
-A live version of the game [lives here](http://eimaj.net/mastermind/index.html).
+You can play a live version of the game here: [mastermind.eimaj.net](http://mastermind.eimaj.net/).
 
 ---
 
