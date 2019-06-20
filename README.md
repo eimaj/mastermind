@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4a795ade-8343-42d2-9fa9-de6168f031a4/deploy-status)](https://app.netlify.com/sites/mastermindgame/deploys)
+
 # Mastermind.js
 
 Written (mostly) on a red-eye flight to Las Vegas for a trade show. The rest was written while lost in a casino.
