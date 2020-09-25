@@ -7,51 +7,67 @@
     <meta name="mobile-web-app-capable" content="yes">
 
     <title>Mastermind.js</title>
-    
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;400;700&display=swap" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="./styles.css">
   </head>
 
   <body>
-    <div class="canvas">
-      <div class="canvas__explantion">
-        <h1 class="canvas__title">Mastermind</h1>
-        <p class="canvas__rules">
+    <div class="container">
+      <div class="canvas">
+        <h1 class="canvas__title">
+          MASTERMIND<span class="canvas__title--js">.js</span>
+        </h1>
+
+        <div id="highscore" class="canvas__highscore"></div>
+
+        <div id="notification" class="canvas__notification"></div>
+
+        <input id="guess" class="canvas__input" type="text" />
+
+        <button id="reset" class="reset-button" type="button" name="reset">
+          Reset
+        </button>
+
+        <div id="results" class="canvas__results"></div>
+      </div>
+
+      <p class="glossary">
+        ● = Correct number and location
+        <br />
+        ○ = Correct number, wrong location
+      </p>
+
+      <div class="rules">
+        <h2 class="rules__h2">Rules</h2>
+
+        <p class="rules__p">
           Guess the pattern.
-          <br />Four characters.
-          <br />Numbers 1 through 6.
+        </p>
+
+        <p class="rules__p">
+          Only use numbers 1 through 6.
+        </p>
+
+        <p class="rules__p">
+          <strong>Result order does not match input order.</strong>
         </p>
       </div>
 
-      <input id="guess" class="canvas__input" type="number" />
-
-      <div id="highscore" class="canvas__highscore"></div>
-
-      <div id="notification" class="canvas__notification"></div>
-
-      <div id="results" class="canvas__results"></div>
-
-      <div class="canvas__rules canvas__rules--small">
-        <strong>Result order != input order</strong>
+      <p class="footer">
+        Written (mostly) on a plane by <a href="http://eimaj.dev">@eimaj</a>
         <br />
-        x = Correct number and location
-        <br />
-        o = Correct number, wrong location
-      </div>
+        <a href="https://github.com/eimaj/mastermind">repo</a> |
+        <a href="https://github.com/eimaj">github</a> |
+        <a href="https://www.linkedin.com/in/eimaj">linkedin</a>
+      </p>
 
-      <button id="restart" class="canvas__restart-button" type="button" name="restart">
-        Restart
-      </button>
+      <p class="footer">
+        <img src="./images/octopod.png" alt="An octopus listening to music">
+      </p>
     </div>
 
-    <p class="footer">
-      Written on a plane by <a href="http://eimaj.net">@eimaj</a>
-      <br />
-      <a href="https://github.com/eimaj/mastermind">repo</a> |
-      <a href="https://github.com/eimaj">github</a> |
-      <a href="https://www.linkedin.com/in/eimaj">linkedin</a> |
-      <a href="https://twitter.com/eimaj">twitter</a>
-    </p>
 
     <script src="./mastermind.js"></script>
   </body>
