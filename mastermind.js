@@ -1,8 +1,12 @@
-const restartButton = document.getElementById('restart');
+const resetButton = document.getElementById('reset');
 const highscoreCanvas = document.getElementById('highscore');
 const notificationCanvas = document.getElementById('notification');
 const resultsCanvas = document.getElementById('results');
 const guessInput = document.getElementById('guess');
+
+const CORRECT_LOCATION = '●'
+const CORRECT_VALUE = '○'
+const YOU_WIN = CORRECT_LOCATION + CORRECT_LOCATION + CORRECT_LOCATION + CORRECT_LOCATION;
 
 let guess = '';
 let guessCount = 0;
@@ -19,12 +23,12 @@ const postToNotification = (message = '') => {
 // User notification:
 const postHighscore = () => {
   document.cookie = `eimaj_mastermind_highscore=${highscore}`;
-  highscoreCanvas.innerText = `High Score: ${highscore}`;
+  highscoreCanvas.innerText = `Your high score: ${highscore}`;
 }
 
 // Append result for user:
 const postToResult = result => {
-  resultsCanvas.innerHTML = `${result}<br />${ resultsCanvas.innerHTML}`;
+  resultsCanvas.innerHTML = `<div class="canvas__result">${result}</div>${ resultsCanvas.innerHTML}`;
 }
 
 // Clear the result block:
@@ -41,7 +45,7 @@ const clearInput = () => {
 const checkCorrectLocation = (number, i) => {
   if (number === secretArray[i]) {
     secretArray[i] = '-';
-    resultArray.push('x');
+    resultArray.push(CORRECT_LOCATION);
     return 0;
   }
 
@@ -53,7 +57,7 @@ const checkCorrectValue = (number, i) => {
   if (secretArray.findIndex(secret => secret === number) >= 0) {
     const index = secretArray.findIndex(secret => secret === number);
     secretArray[index] = '-';
-    resultArray.push('o');
+    resultArray.push(CORRECT_VALUE);
     return 0;
   }
 
@@ -90,7 +94,7 @@ const youWin = () => {
 
 // Let the user know how many guesses they've had:
 const guessAgain = () => {
-  postToNotification(`${guessCount} guesses so far.`);
+  // postToNotification(`${guessCount} guesses so far.`);
 }
 
 // Do all the things with the result:
@@ -99,8 +103,6 @@ const checkResult = guess => {
 
   if (guessArray.length < 4) { return false; }
 
-  // Clear input:
-  clearInput();
   guessCount += 1;
 
   const resultGuess = `${guessArray.join('')}`;
@@ -111,9 +113,12 @@ const checkResult = guess => {
     .map(checkCorrectLocation)
     .map(checkCorrectValue);
 
-  postToResult(`${resultGuess} [${resultArray}]`);
+  postToResult(`<div class="canvas__guess">${resultGuess}</div><div class="canvas__success">${resultArray.join('')}</div>`);
 
-  if (resultArray.join('') === 'xxxx') { return youWin(); }
+  if (resultArray.join('') === YOU_WIN) { return youWin(); }
+
+  // Clear input:
+  clearInput();
 
   return guessAgain();
 }
@@ -122,8 +127,11 @@ const checkResult = guess => {
 const checkCharValidity = char => {
   const integer = parseInt(char, 10);
 
-  // If the char is valid, return it:
-  if (integer && integer > 0 && integer < 7) { return char; }
+  // If the char is valid, return it and clear any notification:
+  if (integer && integer > 0 && integer < 7) {
+    postToNotification('');
+    return char;
+  }
 
   // Notify the player and return nothing:
   postToNotification('That was not a valid character.')
@@ -171,7 +179,7 @@ const reset = event => {
 // Start the game:
 const init = () => {
   guessInput.addEventListener('keyup', validateGuess);
-  restartButton.addEventListener('click', reset);
+  resetButton.addEventListener('click', reset);
   calcualateHighScore();
   return reset();
 }
